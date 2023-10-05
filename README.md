@@ -59,7 +59,8 @@ Logical Color/Intensity
 ---
 Like other sub-classes of the Adafruit_GFX library, the graphic primitives allow you to specify
 the color to draw with.  So I defined a few colors
-````
+
+```
 #define MATRIX_BLACK  0   ///< Draw 'off' pixels
 #define MATRIX_DARK   0x1
 #define MATRIX_LIGHT  0x2
