@@ -1,8 +1,6 @@
 #include <UNOR4WMatrixGFX.h>
 #include <Fonts/FreeMono9pt7b.h>
-#include "font_Arial.h"
-#include "font_DroidSans.h"
-#include "font_ComicSansMS.h"
+#include <UNOR4W_matrix_font_Arial89.h>
 
 UNOR4WMatrixGFX display;
 
@@ -37,7 +35,9 @@ void setup() {
   testILIFonts();
 
   testdrawchar();
-  testdrawfontchar();
+  // Test draw GFX Font - 
+  // currently disabled as GFX fonts have issues.
+  //testdrawfontchar();
 }
 
 uint8_t loop_count = 0;
@@ -171,10 +171,9 @@ void testdrawchar(void) {
 
 void testdrawfontchar(void) {
   display.clearDisplay();
-
-  //  display.setFont(&FreeMono9pt7b);
-  // display.setTextSize(1);              // Normal 1:1 pixel scale
-  display.setILIFont(&Arial_8);
+  display.setRotation(1);
+  display.setFont(&FreeMono9pt7b);
+  display.setTextSize(1);              // Normal 1:1 pixel scale
   display.setTextColor(MATRIX_WHITE);  // Draw white text
 
   // Not all the characters will fit on the display. This is normal.
@@ -186,8 +185,8 @@ void testdrawfontchar(void) {
     display.display();
     delay(125);
   }
-  display.setILIFont(nullptr);
-  //display.setFont();
+  display.setFont();
+  display.setRotation(0);
 }
 
 GFXcanvas8 canvas(80, 16);  // 1-bit, 80x8 pixels

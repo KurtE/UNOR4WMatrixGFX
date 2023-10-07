@@ -1,6 +1,17 @@
+//=============================================================================
+// This example sketch draws a few different tests in each of the 4 rotations
+// of the board.
+//
+// Note: By default This sketch will pause 2 seconds between screens or until you
+// type something in.  You can switch the pause to always wait for input if your
+// if the first character you type in is a $.  To go back to the timed pause mode
+// type in another $.
+//=============================================================================
 #include <UNOR4WMatrixGFX.h>
 
 UNOR4WMatrixGFX display;
+bool g_use_timed_pause = true;
+#define PAUSE_MS 2000
 
 void setup() {
   while (!Serial && millis() < 5000) {}
@@ -62,10 +73,27 @@ void loop() {
 }
 
 void step(const char *szTitle) {
+  int ch = 0;
   Serial.print(szTitle);
-  Serial.println(" *** Press any key to continue ***");
-  while (Serial.read() == -1) {}
-  while (Serial.read() != -1) {}
+  if (g_use_timed_pause) {
+    Serial.println(" *** Timed wait or press any key to continue ***");
+    uint32_t start_time = millis();
+    while (((millis() - start_time) < PAUSE_MS) && (ch = Serial.read()) == -1) {}
+    if (ch == '$') {
+      g_use_timed_pause = false;
+      Serial.println(">> Pause between pages mode");
+    }
+    while (Serial.read() != -1) {}
+
+  } else {
+    Serial.println(" *** Press any key to continue ***");
+    while ((ch = Serial.read()) == -1) {}
+    if (ch == '$') {
+      g_use_timed_pause = true;
+      Serial.println(">> Timed pause mode");
+    }
+    while (Serial.read() != -1) {}
+  }
 }
 
 void print_display_info() {

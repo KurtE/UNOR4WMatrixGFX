@@ -29,6 +29,14 @@
 
 #ifndef _UNOR4WiFi_Matrix_GFX_h_
 #define _UNOR4WiFi_Matrix_GFX_h_
+
+// this only is valid for the UNO R4 WiFi boards. So look for their define or my version
+// or my version where the RA4M1 processor contols the USB
+#if !(defined(ARDUINO_UNOR4_WIFI) || defined(ARDUINO_UNOR4_WIFIUSB))
+#error "This library only supports the Arduino UNO R4 WiFi boards!"
+#endif
+
+
 #include "FspTimer.h"
 
 // Uncomment if you want to enable the digital pins for debug
